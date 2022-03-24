@@ -20,9 +20,9 @@ import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.common.ResourceArg;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.junit.TestProfile;
 import io.restassured.RestAssured;
 import org.apache.camel.quarkus.component.fhir.it.util.Dstu2_1Enabled;
-import org.apache.camel.quarkus.test.EnabledIf;
 import org.junit.jupiter.api.Disabled;
 
 import static org.hamcrest.Matchers.is;
@@ -30,7 +30,7 @@ import static org.hamcrest.Matchers.is;
 @QuarkusTest
 @QuarkusTestResource(value = FhirTestResource.class, initArgs = @ResourceArg(name = "fhirVersion", value = "DSTU2_1"))
 @TestHTTPEndpoint(FhirDstu2_1Resource.class)
-@EnabledIf(Dstu2_1Enabled.class)
+@TestProfile(Dstu2_1Enabled.class)
 @Disabled("https://github.com/hapifhir/hapi-fhir-jpaserver-starter/issues/335")
 class FhirDstu2_1Test extends AbstractFhirTest {
 

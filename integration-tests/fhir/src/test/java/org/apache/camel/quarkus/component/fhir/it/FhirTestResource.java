@@ -50,7 +50,7 @@ public class FhirTestResource implements QuarkusTestResourceLifecycleManager {
             return Collections.emptyMap();
         }
 
-        if (!FhirTestHelper.isFhirVersionEnabled(fhirVersion.name())) {
+        if (!FhirTestHelper.isFhirVersionEnabled(fhirVersion.simpleVersion())) {
             LOGGER.info("FHIR version {} is disabled. No hapi test container will be started for it.",
                     fhirVersion.simpleVersion());
             return Collections.emptyMap();

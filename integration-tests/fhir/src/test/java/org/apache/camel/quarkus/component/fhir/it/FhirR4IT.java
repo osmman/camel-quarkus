@@ -17,11 +17,11 @@
 package org.apache.camel.quarkus.component.fhir.it;
 
 import io.quarkus.test.junit.NativeImageTest;
+import io.quarkus.test.junit.TestProfile;
 import org.apache.camel.quarkus.component.fhir.it.util.R4Enabled;
-import org.apache.camel.quarkus.test.EnabledIf;
 
 @NativeImageTest
-@EnabledIf(R4Enabled.class)
+@TestProfile(R4Enabled.class)
 class FhirR4IT extends FhirR4Test {
 
 }

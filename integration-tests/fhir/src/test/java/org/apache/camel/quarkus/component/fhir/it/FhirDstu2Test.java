@@ -20,16 +20,16 @@ import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.common.ResourceArg;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
+import io.quarkus.test.junit.TestProfile;
 import io.restassured.RestAssured;
 import org.apache.camel.quarkus.component.fhir.it.util.Dstu2Enabled;
-import org.apache.camel.quarkus.test.EnabledIf;
 
 import static org.hamcrest.Matchers.is;
 
 @QuarkusTest
 @QuarkusTestResource(value = FhirTestResource.class, initArgs = @ResourceArg(name = "fhirVersion", value = "DSTU2"))
 @TestHTTPEndpoint(FhirDstu2Resource.class)
-@EnabledIf(Dstu2Enabled.class)
+@TestProfile(Dstu2Enabled.class)
 class FhirDstu2Test extends AbstractFhirTest {
 
     public void capabilities(String encodeAs) {

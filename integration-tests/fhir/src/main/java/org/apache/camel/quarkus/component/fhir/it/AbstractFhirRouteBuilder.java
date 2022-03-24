@@ -28,6 +28,7 @@ import org.apache.camel.component.fhir.FhirJsonDataFormat;
 import org.apache.camel.component.fhir.FhirXmlDataFormat;
 import org.eclipse.microprofile.config.Config;
 import org.eclipse.microprofile.config.ConfigProvider;
+import org.jboss.logging.Logger;
 
 public abstract class AbstractFhirRouteBuilder extends RouteBuilder {
 
@@ -37,8 +38,11 @@ public abstract class AbstractFhirRouteBuilder extends RouteBuilder {
 
     abstract boolean isEnabled();
 
+    private static final Logger LOG = Logger.getLogger(AbstractFhirRouteBuilder.class);
+
     @Override
     public void configure() throws Exception {
+        LOG.info("FHIR " + this.getClass().getName() + " " + isEnabled());
         if (isEnabled()) {
             Config config = ConfigProvider.getConfig();
             String fhirVersion = getFhirVersion();

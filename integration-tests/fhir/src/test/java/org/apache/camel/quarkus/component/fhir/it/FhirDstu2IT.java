@@ -17,11 +17,11 @@
 package org.apache.camel.quarkus.component.fhir.it;
 
 import io.quarkus.test.junit.NativeImageTest;
+import io.quarkus.test.junit.TestProfile;
 import org.apache.camel.quarkus.component.fhir.it.util.Dstu2Enabled;
-import org.apache.camel.quarkus.test.EnabledIf;
 
 @NativeImageTest
-@EnabledIf(Dstu2Enabled.class)
+@TestProfile(Dstu2Enabled.class)
 class FhirDstu2IT extends FhirDstu2Test {
 
 }

@@ -16,11 +16,14 @@
  */
 package org.apache.camel.quarkus.component.fhir.it.util;
 
-import java.util.function.BooleanSupplier;
+import java.util.Map;
 
-public class R4Enabled implements BooleanSupplier {
+import io.quarkus.test.junit.QuarkusTestProfile;
+import org.apache.camel.util.CollectionHelper;
+
+public class R4Enabled implements QuarkusTestProfile {
     @Override
-    public boolean getAsBoolean() {
-        return FhirTestHelper.isFhirVersionEnabled("R4");
+    public Map<String, String> getConfigOverrides() {
+        return CollectionHelper.mapOf("quarkus.camel.fhir.enable-r4", "true");
     }
 }
