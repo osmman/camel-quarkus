@@ -16,13 +16,13 @@
  */
 package org.apache.camel.quarkus.component.jms.ibmmq.it;
 
-import com.ibm.mq.jakarta.jms.MQConnectionFactory;
+import com.ibm.mq.jakarta.jms.MQXAConnectionFactory;
 import com.ibm.msg.client.jakarta.wmq.WMQConstants;
 import jakarta.enterprise.context.Dependent;
 import org.eclipse.microprofile.config.ConfigProvider;
 
 @Dependent
-public class IBMMQConnectionFactory extends MQConnectionFactory {
+public class IBMMQConnectionFactory extends MQXAConnectionFactory {
 
     public IBMMQConnectionFactory() {
         setHostName(ConfigProvider.getConfig().getValue("ibm.mq.host", String.class));
