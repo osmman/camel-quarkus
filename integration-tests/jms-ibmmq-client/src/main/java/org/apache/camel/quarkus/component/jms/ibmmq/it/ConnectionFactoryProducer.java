@@ -18,25 +18,34 @@ package org.apache.camel.quarkus.component.jms.ibmmq.it;
 
 import com.ibm.mq.jakarta.jms.MQXAConnectionFactory;
 import com.ibm.msg.client.jakarta.wmq.WMQConstants;
-import jakarta.enterprise.context.Dependent;
+import io.quarkiverse.messaginghub.pooled.jms.PooledJmsRuntimeConfig;
+import io.quarkiverse.messaginghub.pooled.jms.PooledJmsWrapper;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Produces;
+import jakarta.jms.ConnectionFactory;
 import org.eclipse.microprofile.config.ConfigProvider;
 
-@Dependent
-public class IBMMQConnectionFactory extends MQXAConnectionFactory {
+public class ConnectionFactoryProducer {
 
-    public IBMMQConnectionFactory() {
-        setHostName(ConfigProvider.getConfig().getValue("ibm.mq.host", String.class));
+    @Produces
+    @ApplicationScoped
+    ConnectionFactory createConnectionFactory(PooledJmsRuntimeConfig pooledJmsRuntimeConfig) {
+        MQXAConnectionFactory mqCF = new MQXAConnectionFactory();
+        mqCF.setHostName(ConfigProvider.getConfig().getValue("ibm.mq.host", String.class));
         try {
-            setPort(ConfigProvider.getConfig().getValue("ibm.mq.port", Integer.class));
-            setChannel(ConfigProvider.getConfig().getValue("ibm.mq.channel", String.class));
-            setQueueManager(ConfigProvider.getConfig().getValue("ibm.mq.queueManagerName", String.class));
-            setTransportType(WMQConstants.WMQ_CM_CLIENT);
-            setStringProperty(WMQConstants.USERID,
+            mqCF.setPort(ConfigProvider.getConfig().getValue("ibm.mq.port", Integer.class));
+            mqCF.setChannel(ConfigProvider.getConfig().getValue("ibm.mq.channel", String.class));
+            mqCF.setQueueManager(ConfigProvider.getConfig().getValue("ibm.mq.queueManagerName", String.class));
+            mqCF.setTransportType(WMQConstants.WMQ_CM_CLIENT);
+            mqCF.setStringProperty(WMQConstants.USERID,
                     ConfigProvider.getConfig().getValue("ibm.mq.user", String.class));
-            setStringProperty(WMQConstants.PASSWORD,
+            mqCF.setStringProperty(WMQConstants.PASSWORD,
                     ConfigProvider.getConfig().getValue("ibm.mq.password", String.class));
         } catch (Exception e) {
             throw new RuntimeException("Unable to create new IBM MQ connection factory", e);
         }
+
+        PooledJmsWrapper wrapper = new PooledJmsWrapper(true, pooledJmsRuntimeConfig);
+        return wrapper.wrapConnectionFactory(mqCF);
     }
 }

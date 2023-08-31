@@ -67,7 +67,7 @@ public class IBMMQTest extends AbstractJmsMessagingTest {
         RestAssured.get("/messaging/jms/ibmmq/connection/factory")
                 .then()
                 .statusCode(200)
-                .body(startsWith("org.apache.camel.quarkus.component.jms.ibmmq.it.IBMMQConnectionFactory"));
+                .body(startsWith("com.ibm.mq.jakarta.jms.MQXAConnectionFactory"));
     }
 
     @Test

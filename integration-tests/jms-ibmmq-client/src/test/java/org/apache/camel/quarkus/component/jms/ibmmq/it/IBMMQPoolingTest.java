@@ -69,7 +69,7 @@ public class IBMMQPoolingTest extends AbstractJmsMessagingTest {
         RestAssured.get("/messaging/jms/ibmmq/connection/factory")
                 .then()
                 .statusCode(200)
-                .body(startsWith("org.apache.camel.quarkus.component.jms.ibmmq.it.IBMMQConnectionFactory"));
+                .body(startsWith("org.messaginghub.pooled.jms.JmsPoolConnectionFactory"));
     }
 
     @Override

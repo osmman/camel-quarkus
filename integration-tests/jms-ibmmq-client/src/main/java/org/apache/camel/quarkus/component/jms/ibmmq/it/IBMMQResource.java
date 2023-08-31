@@ -16,6 +16,7 @@
  */
 package org.apache.camel.quarkus.component.jms.ibmmq.it;
 
+import io.quarkus.arc.ClientProxy;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.jms.ConnectionFactory;
@@ -49,7 +50,7 @@ public class IBMMQResource {
     @Path("/connection/factory")
     @Produces(MediaType.TEXT_PLAIN)
     public String connectionFactoryImplementation() {
-        return connectionFactory.getClass().getName();
+        return ((ClientProxy) connectionFactory).arc_contextualInstance().getClass().getName();
     }
 
     @POST
